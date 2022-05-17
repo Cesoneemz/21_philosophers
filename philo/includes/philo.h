@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:53:31 by wlanette          #+#    #+#             */
-/*   Updated: 2022/04/28 20:55:27 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:01:27 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ t_config	*ft_init_all(char *argv[]);
 
 int			ft_atoi(const char *str);
 long long	ft_get_timestamp(void);
-void		ft_swap(int	*a, int *b);
+long long	ft_get_elapsed_time(long long past, long long pres);
 void		ft_print_action(t_config *config, int num, char *str);
 void		ft_check_end(t_config *config);
-void		ft_sleep(long long time);
+void		ft_sleep(long long time, t_config *config);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:09:23 by wlanette          #+#    #+#             */
-/*   Updated: 2022/04/28 19:51:07 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/17 20:01:16 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,7 @@ long long	ft_get_timestamp(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	ft_swap(int	*a, int *b)
+long long	ft_get_elapsed_time(long long past, long long pres)
 {
-	int	*tmp;
-
-	tmp = a;
-	a = b;
-	b = tmp;
+	return (pres - past);
 }

@@ -6,7 +6,7 @@
 #    By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 18:49:51 by wlanette          #+#    #+#              #
-#    Updated: 2022/04/28 20:28:39 by wlanette         ###   ########.fr        #
+#    Updated: 2022/05/17 20:20:46 by wlanette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ OBJS		= $(SRCS:.c=.o)
 INCS		= ./includes/
 INCS_HEADER	= ./includes/philo.h
 
-CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -I$(INCS) -g -pthread
+CC			= clang
+CFLAGS		= -Wall -Werror -Wextra -I$(INCS) -g -fsanitize=thread
 RM			= rm -rf
 
 all:		$(NAME)
