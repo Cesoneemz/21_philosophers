@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:53:31 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/17 20:01:27 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/18 22:09:00 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int			ft_proceed(t_config *config);
 /* INIT */
 
 t_config	*ft_init_all(char *argv[]);
+
+/* PHILO EAT */
+
+void		ft_take_fork(t_config *config, int fork_id, int id);
+void		ft_throw_fork(t_config *config, int fork_id);
+void		ft_philo_eat(t_config *config, int id);
 
 /* UTILS */
 
