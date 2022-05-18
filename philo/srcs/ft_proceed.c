@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/17 20:20:33 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:06:15 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,19 @@ void	*ft_philo(void *void_philo)
 	config = philo->config;
 	if (philo->id % 2)
 		usleep(15000);
-	while (1)
+	while (!config->philo_is_die)
 	{
+		if (config->philo_is_ate || config->philo_is_die)
+			break ;
 		ft_eat(philo);
 		if (config->philo_is_ate || config->philo_is_die)
 			break ;
 		ft_print_action(config, philo->id, "is sleeping");
+		if (config->philo_is_ate || config->philo_is_die)
+			break ;
 		ft_sleep(config->time_to_sleep, config);
+		if (config->philo_is_ate || config->philo_is_die)
+			break ;
 		ft_print_action(config, philo->id, "is thinking");
 	}
 	return (NULL);
@@ -65,12 +71,14 @@ static void	ft_exit_proceed(t_config *config, t_philo *philo)
 {
 	int	index;
 
-	(void)philo;
+	index = -1;
+	if (config->nb_philo == 1)
+		pthread_mutex_unlock(&config->forks[0]);
+	while (++index < config->nb_philo)
+		pthread_join(philo[index].thread_id, NULL);
 	index = -1;
 	while (++index < config->nb_philo)
 		pthread_mutex_destroy(&config->forks[index]);
-	pthread_mutex_unlock(&config->mutex_condition);
-	pthread_mutex_unlock(&config->mutex_writing);
 	pthread_mutex_destroy(&config->mutex_writing);
 	pthread_mutex_destroy(&config->mutex_eating);
 	pthread_mutex_destroy(&config->mutex_condition);
@@ -91,8 +99,6 @@ int	ft_proceed(t_config *config)
 		philo[index].last_eat_time = ft_get_timestamp();
 		if (pthread_create(&(philo[index].thread_id), NULL, ft_philo, \
 		&(philo[index])))
-			return (1);
-		if (pthread_detach(philo[index].thread_id))
 			return (1);
 		index++;
 	}

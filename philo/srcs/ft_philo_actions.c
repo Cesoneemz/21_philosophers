@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:53:55 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/17 20:13:27 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:20:27 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void	ft_print_action(t_config *config, int num, char *str)
 static int	ft_check_death(t_philo *philo, t_config *config)
 {
 	pthread_mutex_lock(&config->mutex_condition);
-	if (ft_get_elapsed_time(philo->last_eat_time, ft_get_timestamp()) > config->time_to_die)
+	if (ft_get_elapsed_time(philo->last_eat_time, ft_get_timestamp()) > \
+	config->time_to_die)
 	{
-		pthread_mutex_lock(&(config->mutex_writing));
-		printf("%lli %i %s\n", ft_get_timestamp() - config->timestamp, philo->id + 1, "is died");
+		ft_print_action(config, philo->id, "is died");
 		config->philo_is_die = 1;
+		pthread_mutex_unlock(&config->mutex_condition);
 		return (1);
 	}
 	pthread_mutex_unlock(&config->mutex_condition);
@@ -56,7 +57,7 @@ static int	ft_check_ate(t_config *config)
 	}
 	if (counter == config->nb_philo)
 	{
-		pthread_mutex_lock(&config->mutex_condition);
+		config->philo_is_ate = 1;
 		return (1);
 	}
 	return (0);
@@ -82,7 +83,6 @@ void	ft_check_end(t_config *config)
 		{
 			if (ft_check_death(&config->philo[index], config))
 				return ;
-			ft_sleep(100, config);
 		}
 		if (config->nb_must_eat != -1)
 		{
