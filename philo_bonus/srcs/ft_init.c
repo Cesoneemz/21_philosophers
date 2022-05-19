@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:08:36 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 17:10:30 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:58:23 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	ft_init_sem(t_config *config)
 {
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_writing");
-	sem_unlink("/philo_eating");
 	sem_unlink("/philo_condition");
 	config->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, \
 	config->nb_philo);

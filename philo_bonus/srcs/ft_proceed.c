@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 17:10:41 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:58:31 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ static void	ft_exit_proceed(t_config *config)
 	sem_close(config->forks);
 	sem_close(config->sem_condition);
 	sem_close(config->sem_writing);
+	sem_unlink("/philo_forks");
+	sem_unlink("/philo_writing");
+	sem_unlink("/philo_condition");
 }
 
 int	ft_proceed(t_config *config)
