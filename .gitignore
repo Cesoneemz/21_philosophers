@@ -1,6 +1,5 @@
 .vscode/
 
 *.o
-philo
 
 philo_bonus/vgcore.*
