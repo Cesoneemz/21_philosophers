@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:53:31 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/18 22:09:00 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:11:17 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_config
 	t_philo			philo[200];
 	pthread_mutex_t	forks[200];
 	pthread_mutex_t	mutex_writing;
-	pthread_mutex_t	mutex_eating;
 	pthread_mutex_t	mutex_condition;
 }				t_config;
 

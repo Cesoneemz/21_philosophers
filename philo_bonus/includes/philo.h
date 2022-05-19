@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:53:31 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/18 23:55:06 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:10:50 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_config
 	t_philo			philo[200];
 	sem_t			*forks;
 	sem_t			*sem_writing;
-	sem_t			*sem_eating;
 	sem_t			*sem_condition;
 }				t_config;
 

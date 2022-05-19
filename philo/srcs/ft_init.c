@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:08:36 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/18 22:14:03 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:11:02 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static int	ft_init_mutex(t_config *config)
 		if (pthread_mutex_init(&(config->forks[index]), NULL))
 			return (1);
 	}
-	if (pthread_mutex_init(&(config->mutex_eating), NULL))
-		return (1);
 	if (pthread_mutex_init(&(config->mutex_writing), NULL))
 		return (1);
 	if (pthread_mutex_init(&(config->mutex_condition), NULL))

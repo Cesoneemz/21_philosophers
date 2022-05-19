@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/18 23:01:23 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:11:10 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static void	ft_exit_proceed(t_config *config, t_philo *philo)
 	while (++index < config->nb_philo)
 		pthread_mutex_destroy(&config->forks[index]);
 	pthread_mutex_destroy(&config->mutex_writing);
-	pthread_mutex_destroy(&config->mutex_eating);
 	pthread_mutex_destroy(&config->mutex_condition);
 }
 
