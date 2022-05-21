@@ -6,13 +6,13 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 19:58:31 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/21 03:57:17 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	ft_eat(t_philo *philo)
+void	ft_eat(t_philo *philo)
 {
 	t_config	*config;
 
@@ -37,18 +37,15 @@ void	ft_philo(void *void_philo)
 	config = philo->config;
 	philo->last_eat_time = ft_get_timestamp();
 	pthread_create(&(philo->check_death), NULL, ft_check_end, void_philo);
-	if (philo->id % 2)
-		usleep(5000);
-	while (!config->philo_is_die)
+	pthread_create(&(philo->watchdog), NULL, ft_watchdog, (void *)config);
+	while (1)
 	{
-		ft_eat(philo);
-		if (config->philo_is_ate || config->philo_is_die)
+		if (ft_philo_proceed(config, philo))
 			break ;
-		ft_print_action(config, philo->id, "is sleeping");
-		ft_sleep(config->time_to_sleep, config);
-		ft_print_action(config, philo->id, "is thinking");
 	}
 	pthread_join(philo->check_death, NULL);
+	pthread_join(philo->watchdog, NULL);
+	ft_cleanup(config);
 	exit(0);
 }
 
@@ -56,8 +53,10 @@ static void	ft_exit_proceed(t_config *config)
 {
 	int	index;
 	int	result;
+	int	status;
 
 	index = 0;
+	result = 0;
 	while (index < config->nb_philo)
 	{
 		waitpid(-1, &result, 0);
@@ -65,17 +64,12 @@ static void	ft_exit_proceed(t_config *config)
 		{
 			index = -1;
 			while (++index < config->nb_philo)
-				kill(config->philo[index].process_id, SIGTERM);
+				waitpid(-1, &status, 0);
 			break ;
 		}
 		index++;
 	}
-	sem_close(config->forks);
-	sem_close(config->sem_condition);
-	sem_close(config->sem_writing);
-	sem_unlink("/philo_forks");
-	sem_unlink("/philo_writing");
-	sem_unlink("/philo_condition");
+	ft_cleanup(config);
 }
 
 int	ft_proceed(t_config *config)
@@ -88,6 +82,7 @@ int	ft_proceed(t_config *config)
 	config->philo_is_die = 0;
 	config->philo_is_ate = 0;
 	philo = config->philo;
+	sem_wait(config->sem_die);
 	while (++index < config->nb_philo)
 	{
 		philo[index].process_id = fork();

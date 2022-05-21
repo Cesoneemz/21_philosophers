@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:53:31 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 17:10:50 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/21 03:46:05 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo
 	long long		last_eat_time;
 	struct s_config	*config;
 	pthread_t		check_death;
+	pthread_t		watchdog;
 	pid_t			process_id;
 }				t_philo;
 
@@ -49,11 +50,13 @@ typedef struct s_config
 	sem_t			*forks;
 	sem_t			*sem_writing;
 	sem_t			*sem_condition;
+	sem_t			*sem_die;
 }				t_config;
 
 /* MAIN */
 
 int			ft_proceed(t_config *config);
+int			ft_philo_proceed(t_config *config, t_philo *philo);
 
 /* INIT */
 
@@ -64,6 +67,7 @@ t_config	*ft_init_all(char *argv[]);
 void		ft_take_fork(t_config *config, int id);
 void		ft_throw_fork(t_config *config);
 void		ft_philo_eat(t_config *config, int id);
+void		ft_eat(t_philo *philo);
 
 /* UTILS */
 
@@ -73,5 +77,7 @@ long long	ft_get_elapsed_time(long long past, long long pres);
 void		ft_print_action(t_config *config, int num, char *str);
 void		*ft_check_end(void *void_philo);
 void		ft_sleep(long long time, t_config *config);
+void		ft_cleanup(t_config *config);
+void		*ft_watchdog(void *void_config);
 
 #endif

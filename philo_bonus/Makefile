@@ -6,13 +6,14 @@
 #    By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/28 18:49:51 by wlanette          #+#    #+#              #
-#    Updated: 2022/05/19 00:41:54 by wlanette         ###   ########.fr        #
+#    Updated: 2022/05/21 02:32:08 by wlanette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo_bonus
 SRCS		= ./srcs/ft_init.c ./srcs/ft_philo_actions.c ./srcs/ft_proceed.c \
-				./srcs/ft_utils.c ./srcs/main.c ./srcs/ft_philo_eat.c
+				./srcs/ft_utils.c ./srcs/main.c ./srcs/ft_philo_eat.c \
+				./srcs/ft_optimization.c
 OBJS		= $(SRCS:.c=.o)
 
 INCS		= ./includes/

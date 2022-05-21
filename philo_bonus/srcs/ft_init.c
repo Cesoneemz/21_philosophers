@@ -6,11 +6,12 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:08:36 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 19:58:23 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/21 03:32:40 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+#include <fcntl.h>
 
 static int	ft_init_philo(t_config *config)
 {
@@ -32,10 +33,12 @@ static int	ft_init_sem(t_config *config)
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_writing");
 	sem_unlink("/philo_condition");
+	sem_unlink("/philo_die");
 	config->forks = sem_open("/philo_forks", O_CREAT, S_IRWXU, \
 	config->nb_philo);
 	config->sem_writing = sem_open("/philo_writing", O_CREAT, S_IRWXU, 1);
 	config->sem_condition = sem_open("/philo_condition", O_CREAT, S_IRWXU, 1);
+	config->sem_die = sem_open("/philo_die", O_CREAT, S_IRWXU, 1);
 	if (config->forks == SEM_FAILED || config->sem_writing == SEM_FAILED || \
 	config->sem_condition == SEM_FAILED)
 		return (1);

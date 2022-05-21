@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:53:55 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 00:40:33 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/21 03:52:37 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ void	ft_sleep(long long time, t_config *config)
 
 static void	ft_exit(t_config *c, t_philo *p)
 {
+	sem_post(c->sem_condition);
 	ft_print_action(c, p->id, "is died");
-	c->philo_is_die = 1;
 	sem_wait(c->sem_writing);
-	exit(1);
+	sem_post(c->sem_die);
+	c->philo_is_die = 1;
+	sem_post(c->forks);
+	sem_post(c->forks);
+	return ;
 }
 
 void	*ft_check_end(void *void_philo)
@@ -55,15 +59,18 @@ void	*ft_check_end(void *void_philo)
 	{
 		sem_wait(c->sem_condition);
 		if (ft_get_elapsed_time(p->last_eat_time, ft_get_timestamp()) \
-		> c->time_to_die)
+		> c->time_to_die && !c->philo_is_die)
+		{
 			ft_exit(c, p);
+			break ;
+		}
 		sem_post(c->sem_condition);
 		if (c->philo_is_die)
 			break ;
 		if (p->count_eat >= c->nb_must_eat && c->nb_must_eat != -1)
 		{
 			c->philo_is_ate = 1;
-			exit(1);
+			break ;
 		}
 	}	
 	return (NULL);
