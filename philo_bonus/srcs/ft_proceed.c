@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/21 03:57:17 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/21 04:46:29 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	ft_philo(void *void_philo)
 	philo->last_eat_time = ft_get_timestamp();
 	pthread_create(&(philo->check_death), NULL, ft_check_end, void_philo);
 	pthread_create(&(philo->watchdog), NULL, ft_watchdog, (void *)config);
-	while (1)
+	while (!config->philo_is_die && !config->philo_is_ate)
 	{
 		if (ft_philo_proceed(config, philo))
 			break ;
 	}
+	sem_post(config->sem_die);
 	pthread_join(philo->check_death, NULL);
 	pthread_join(philo->watchdog, NULL);
 	ft_cleanup(config);

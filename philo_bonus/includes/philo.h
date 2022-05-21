@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:53:31 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/21 03:46:05 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/21 04:27:06 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 typedef struct s_philo
 {
 	int				id;
-	int				left_fork_id;
-	int				right_fork_id;
 	int				count_eat;
 	long long		last_eat_time;
 	struct s_config	*config;
