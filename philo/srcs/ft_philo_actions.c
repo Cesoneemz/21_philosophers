@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:53:55 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/18 22:37:16 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:58:57 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	ft_check_end(t_config *config)
 			if (ft_check_death(&config->philo[index], config))
 				return ;
 		}
+		ft_sleep(10, config);
 		if (config->nb_must_eat != -1)
 		{
 			if (ft_check_ate(config))

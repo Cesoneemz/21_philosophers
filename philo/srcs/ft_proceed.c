@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/19 17:11:10 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/23 21:14:36 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ static void	ft_eat(t_philo *philo)
 	ft_throw_fork(config, min_fork_id);
 }
 
+static int	ft_philo_simulation(t_philo *philo, t_config *config)
+{
+	if (config->nb_philo == 1)
+		return (1);
+	pthread_mutex_lock(&config->mutex_condition);
+	if ((config->nb_must_eat != -1 && philo->count_eat >= \
+	config->nb_must_eat) || config->philo_is_die)
+	{
+		pthread_mutex_unlock(&config->mutex_condition);
+		return (1);
+	}
+	pthread_mutex_unlock(&config->mutex_condition);
+	ft_eat(philo);
+	ft_print_action(config, philo->id, "is sleeping");
+	ft_sleep(config->time_to_sleep, config);
+	ft_print_action(config, philo->id, "is thinking");
+	return (0);
+}
+
 void	*ft_philo(void *void_philo)
 {
 	t_philo		*philo;
@@ -48,19 +67,10 @@ void	*ft_philo(void *void_philo)
 		usleep(5000);
 	while (1)
 	{
-		if (config->nb_philo == 1)
+		if (ft_philo_simulation(philo, config))
 			break ;
-		ft_eat(philo);
-		pthread_mutex_lock(&config->mutex_condition);
-		if (config->philo_is_ate || config->philo_is_die)
-		{
-			pthread_mutex_unlock(&config->mutex_condition);
+		if (philo->count_eat >= config->nb_must_eat && config->nb_must_eat != -1)
 			break ;
-		}
-		pthread_mutex_unlock(&config->mutex_condition);
-		ft_print_action(config, philo->id, "is sleeping");
-		ft_sleep(config->time_to_sleep, config);
-		ft_print_action(config, philo->id, "is thinking");
 	}
 	return (NULL);
 }

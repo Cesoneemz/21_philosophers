@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/21 04:46:29 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:45:39 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	ft_eat(t_philo *philo)
 
 	config = philo->config;
 	ft_take_fork(config, philo->id);
+	if (config->nb_philo == 1)
+	{
+		while (!config->philo_is_die)
+			ft_sleep(10, config);
+		return ;
+	}
 	ft_take_fork(config, philo->id);
 	ft_philo_eat(config, philo->id);
 	sem_wait(config->sem_condition);
@@ -46,6 +52,7 @@ void	ft_philo(void *void_philo)
 	sem_post(config->sem_die);
 	pthread_join(philo->check_death, NULL);
 	pthread_join(philo->watchdog, NULL);
+	sem_post(config->sem_writing);
 	ft_cleanup(config);
 	exit(0);
 }

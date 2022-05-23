@@ -6,13 +6,11 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:08:36 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/21 04:27:56 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/23 21:16:46 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-#include <fcntl.h>
-#include <semaphore.h>
 
 static int	ft_init_philo(t_config *config)
 {

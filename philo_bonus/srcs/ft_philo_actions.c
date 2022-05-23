@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:53:55 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/21 04:32:31 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:44:39 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ static void	ft_exit(t_config *c, t_philo *p)
 	return ;
 }
 
+static int	ft_check_death(t_philo *p, t_config *c)
+{
+	return (ft_get_elapsed_time(p->last_eat_time, ft_get_timestamp()) \
+		> c->time_to_die && !c->philo_is_die);
+}
+
 void	*ft_check_end(void *void_philo)
 {
 	t_philo		*p;
@@ -57,23 +63,21 @@ void	*ft_check_end(void *void_philo)
 	while (1)
 	{
 		sem_wait(c->sem_condition);
-		if (ft_get_elapsed_time(p->last_eat_time, ft_get_timestamp()) \
-		> c->time_to_die && !c->philo_is_die)
+		if (ft_check_death(p, c))
 		{
 			ft_exit(c, p);
 			break ;
 		}
-		sem_post(c->sem_condition);
 		if (c->philo_is_die)
 			break ;
-		sem_wait(c->sem_condition);
 		if (p->count_eat >= c->nb_must_eat && c->nb_must_eat != -1)
 		{
 			c->philo_is_ate = 1;
-			sem_post(c->sem_condition);
 			break ;
 		}
 		sem_post(c->sem_condition);
-	}	
+		ft_sleep(50, c);
+	}
+	sem_post(c->sem_condition);
 	return (NULL);
 }
