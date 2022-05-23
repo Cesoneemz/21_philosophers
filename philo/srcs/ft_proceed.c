@@ -6,7 +6,7 @@
 /*   By: wlanette <wlanette@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:28:38 by wlanette          #+#    #+#             */
-/*   Updated: 2022/05/23 21:14:36 by wlanette         ###   ########.fr       */
+/*   Updated: 2022/05/23 21:18:21 by wlanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	*ft_philo(void *void_philo)
 	{
 		if (ft_philo_simulation(philo, config))
 			break ;
-		if (philo->count_eat >= config->nb_must_eat && config->nb_must_eat != -1)
+		if (philo->count_eat >= config->nb_must_eat && \
+		config->nb_must_eat != -1)
 			break ;
 	}
 	return (NULL);
